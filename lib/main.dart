@@ -20,15 +20,34 @@ import 'screens/rorschach_test_screen.dart';
 import 'screens/therapist_booking_screen.dart';
 import 'pages/help_page.dart'; // For PlaceholderChatSessionScreen
 import 'screens/placeholder_chat_session_screen.dart';
+import 'screens/welcome_screen.dart';
+import 'screens/create_account_screen.dart';
+import 'screens/email_verification_screen.dart';
+import 'screens/complete_profile_screen.dart';
 // --- Route Management Class (Defining the Map) ---
 class AppRouter {
   static Map<String, WidgetBuilder> get routes {
     return {
       // Auth Flow
+      AppRoutes.welcomeScreen: (context) => const WelcomeScreen(),
+      AppRoutes.createAccountScreen: (context) => const CreateAccountScreen(),
+      AppRoutes.verifyEmailScreen: (context) => const EmailVerificationScreen(),
+      AppRoutes.completeProfileScreen: (context) => const CompleteProfileScreen(),
       AppRoutes.loginScreen: (context) => const LoginScreen(),
       
-      // Main App Wrapper (Bottom Nav Host)
-      AppRoutes.mainWrapper: (context) => const MainWrapper(),
+      AppRoutes.mainWrapper: (context) {
+        // 1. Get arguments passed during navigation (e.g., from login)
+        final args = ModalRoute.of(context)!.settings.arguments;
+        String userName = 'User'; // Default name
+
+        // 2. Check if the argument is a String (our expected userName)
+        if (args is String) {
+          userName = args;
+        }
+
+        // 3. Pass the extracted userName to the MainWrapper widget
+        return MainWrapper(userName: userName);
+      },
 
       // Sub Screens
       AppRoutes.messagesScreen: (context) => const MessagesScreen(),
@@ -131,7 +150,7 @@ class SamvaadApp extends StatelessWidget {
           hintStyle: const TextStyle(color: AppColors.greyText),
         ),
       ),
-      initialRoute: AppRoutes.loginScreen,
+      initialRoute: AppRoutes.welcomeScreen,
       // Use the static getter from the AppRouter class
       routes: AppRouter.routes,
     );

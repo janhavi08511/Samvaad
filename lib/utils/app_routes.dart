@@ -2,7 +2,11 @@
 
 class AppRoutes {
   // Auth Flow
+  static const String welcomeScreen = '/welcome';
   static const String loginScreen = '/login';
+  static const String createAccountScreen = '/create-account';
+  static const String verifyEmailScreen = '/verify-email';
+  static const String completeProfileScreen = '/complete-profile';
 
   // Main Wrapper (Bottom Navigation Host)
   static const String mainWrapper = '/main-wrapper';
